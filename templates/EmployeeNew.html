@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Employee - Store Management System</title>
+    <link rel="stylesheet" href="../static/StructStyle.css">
+</head>
+<body>
+
+<div class="navbar">
+    <!-- 导航链接 -->
+    <a href="./Index.html">Index</a>
+    <a href="./Product.html">Product Management</a>
+    <a href="./Inventory.html">Inventory Management</a>
+    <a href="./Employee.html">Employee Management</a>
+    <a href="./Revenue.html">Revenue</a>
+</div>
+
+<div class="container">
+    <h1>Add New Employee</h1>
+    <form action="/submit_new_staff" method="post">
+        <label for="staffName">Employee Name:</label>
+        <input type="text" id="staffName" name="staffName" required>
+
+        <label for="staffPosition">Position:</label>
+        <input type="text" id="staffPosition" name="staffPosition" required>
+
+        <label for="expectedWorkHours">Expected Work Hours:</label>
+        <input type="number" id="expectedWorkHours" name="expectedWorkHours" required>
+
+        <label for="salary">Monthly Salary:</label>
+        <input type="number" id="salary" name="salary" required>
+
+        <!-- 其他员工信息输入 -->
+
+        <input type="submit" value="Add Employee">
+    </form>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Inventory Product - Store Management System</title>
+    <link rel="stylesheet" href="../static/StructStyle.css">
+</head>
+<body>
+
+<div class="navbar">
+    <!-- 导航链接 -->
+    <a href="./Index.html">Index</a>
+    <a href="./Product.html">Product Management</a>
+    <a href="./Inventory.html">Inventory Management</a>
+    <a href="./Employee.html">Employee Management</a>
+    <a href="./Revenue.html">Revenue</a>
+</div>
+
+<div class="container">
+    <h1>Edit Inventory Product</h1>
+    <form action="/update_inventory_product" method="post">
+        <!-- 表单内容应根据选定的库存产品预填充 -->
+        <label for="productName">Product Name:</label>
+        <input type="text" id="productName" name="productName" value="Product B" required>
+
+        <label for="productQuantity">Remaining Quantity:</label>
+        <input type="number" id="productQuantity" name="productQuantity" value="1000" required>
+
+        <label for="productCost">Cost Price:</label>
+        <input type="number" id="productCost" name="productCost" value="10.00" required>
+
+        <label for="productPrice">Selling Price:</label>
+        <input type="number" id="productPrice" name="productPrice" value="15.00" required>
+
+        <!-- 其他库存信息输入 -->
+
+        <input type="submit" value="Update Inventory Product">
+    </form>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warehouse Management - Store Management System</title>
+    <link rel="stylesheet" href="../static/StructStyle.css">
+</head>
+<body>
+
+<div class="navbar">
+    <a href="./Index.html">Index</a>
+    <a href="./Product.html">Product Management</a>
+    <a href="./Inventory.html">Inventory Management</a>
+    <a href="./Employee.html">Employee Management</a>
+    <a href="./Revenue.html">Revenue</a>
+</div>
+
+<div class="container">
+    <h1>Warehouse Management</h1>
+    <a href="./InventoryNew.html" class="button">Add Inventory Item</a>
+    <table>
+        <tr>
+            <th>Product Name</th>
+            <th>Remaining Quantity</th>
+            <th>Purchase Price</th>
+            <th>Selling Price</th>
+            <th>Estimated Time to Sell Out</th>
+            <th>Next Restock Date</th>
+            <th>Actions</th>
+        </tr>
+        <!-- 示例产品库存数据，实际应用应从数据库中动态加载 -->
+        <tr>
+            <td>Product B</td>
+            <td>1000</td>
+            <td>¥10.00</td>
+            <td>¥15.00</td>
+            <td>2023-12-30</td>
+            <td>2023-11-10</td>
+            <td>
+                <a href="./InventoryEdit.html">Edit</a> |
+                <a href="#">Delete</a>
+            </td>
+        </tr>
+        <!-- 其他产品库存数据 -->
+    </table>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

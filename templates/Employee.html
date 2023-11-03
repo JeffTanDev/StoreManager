@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Management</title>
+    <link rel="stylesheet" href="../static/StructStyle.css">
+</head>
+<body>
+
+<div class="navbar">
+    <a href="./Index.html">Index</a>
+    <a href="./Product.html">Product Management</a>
+    <a href="./Inventory.html">Inventory Management</a>
+    <a href="./Employee.html">Employee Management</a>
+    <a href="./Revenue.html">Revenue</a>
+</div>
+
+<div class="container">
+    <h1>Employee Management</h1>
+    <a href="./EmployeeNew.html" class="button">Add Employee</a>
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Position</th>
+            <th>Expected Work Hours</th>
+            <th>Actual Work Hours</th>
+            <th>Monthly Pay</th>
+            <th>Operation</th>
+        </tr>
+        <!-- 示例员工数据，实际应用应从数据库中动态加载 -->
+        <tr>
+            <td>张三</td>
+            <td>店员</td>
+            <td>160小时</td>
+            <td>168小时</td>
+            <td>¥3000</td>
+            <td>
+                <a href="./EmployeeEdit.html">Edit</a> |
+                <a href="#">Delete</a>
+            </td>
+        </tr>
+        <!-- 其他员工数据 -->
+    </table>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

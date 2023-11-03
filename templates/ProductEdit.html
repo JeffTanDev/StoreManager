@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Product - Store Management System</title>
+    <link rel="stylesheet" href="../static/StructStyle.css">
+</head>
+<body>
+
+<div class="navbar">
+    <!-- Navigation links -->
+    <a href="./Index.html">Index</a>
+    <a href="./Product.html">Product Management</a>
+    <a href="./Inventory.html">Inventory Management</a>
+    <a href="./Employee.html">Employee Management</a>
+    <a href="./Revenue.html">Revenue</a>
+</div>
+
+<div class="container">
+    <h1>Edit Product</h1>
+    <form action="/update_product" method="post">
+        <!-- Form content should be pre-filled based on the selected product -->
+        <label for="productName">Product Name:</label>
+        <input type="text" id="productName" name="productName" value="Product A" required>
+
+        <label for="productPrice">Selling Price:</label>
+        <input type="number" id="productPrice" name="productPrice" value="20.00" required>
+
+        <!-- Other product information inputs -->
+
+        <input type="submit" value="Update Product">
+    </form>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

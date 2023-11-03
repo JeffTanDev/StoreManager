@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Management - Store Management System</title>
+    <link rel="stylesheet" href="../static/StructStyle.css">
+</head>
+<body>
+
+<div class="navbar">
+    <a href="./Index.html">Index</a>
+    <a href="./Product.html">Product Management</a>
+    <a href="./Inventory.html">Inventory Management</a>
+    <a href="./Employee.html">Employee Management</a>
+    <a href="./Revenue.html">Revenue</a>
+</div>
+
+<div class="container">
+    <h1>Product Management</h1>
+    <a href="./ProductNew.html" class="button">Add New Product</a>
+    <table>
+        <tr>
+            <th>Product Name</th>
+            <th>Sold Quantity</th>
+            <th>Remaining Quantity</th>
+            <th>Selling Price</th>
+            <th>Expected Sell-Out Date</th>
+            <th>Actions</th>
+        </tr>
+        <!-- Example product data, actual application should dynamically load from the database -->
+        <tr>
+            <td>Product A</td>
+            <td>150</td>
+            <td>350</td>
+            <td>¥20.00</td>
+            <td>2023-12-30</td>
+            <td>
+                <a href="./ProductEdit.html">Edit</a> |
+                <a href="#">Delete</a>
+            </td>
+        </tr>
+        <!-- Other product data -->
+    </table>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

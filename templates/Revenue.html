@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report Management - Store Management System</title>
+    <link rel="stylesheet" href="../static/StructStyle.css">
+</head>
+<body>
+
+<div class="navbar">
+    <a href="./Index.html">Index</a>
+    <a href="./Product.html">Product Management</a>
+    <a href="./Inventory.html">Inventory Management</a>
+    <a href="./Employee.html">Employee Management</a>
+    <a href="./Revenue.html">Revenue</a>
+</div>
+
+<div class="container">
+    <h1>Report Management</h1>
+    <div class="report-section">
+        <h2>Sales Report</h2>
+        <form action="/generate_sales_report" method="post">
+            <label for="month">Select Month:</label>
+            <input type="month" id="month" name="month" required>
+            <input type="submit" value="Generate Sales Report">
+        </form>
+    </div>
+    
+    <div class="report-section">
+        <h2>Profit and Loss Report</h2>
+        <form action="/generate_profit_loss_report" method="post">
+            <label for="month">Select Month:</label>
+            <input type="month" id="month" name="month" required>
+            <input type="submit" value="Generate Profit and Loss Report">
+        </form>
+    </div>
+    
+    <!-- Other report sections -->
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

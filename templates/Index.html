@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Store Management System - Index</title>
+    <style>
+        body { font-family: 'Arial', sans-serif; margin: 0; padding: 0; }
+        .navbar { background-color: #333; overflow: hidden; color: white; }
+        .navbar a { float: left; display: block; color: white; text-align: center; padding: 14px 20px; text-decoration: none; }
+        .navbar a:hover { background-color: #ddd; color: black; }
+        .container { padding: 20px; }
+        .card { background: #f7f7f7; padding: 20px; margin-top: 20px; }
+        .flex { display: flex; justify-content: space-between; }
+        .card > p { margin: 5px 0; }
+        footer { background-color: #333; color: white; text-align: center; padding: 10px; position: fixed; bottom: 0; width: 100%; }
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    <a href="./Index.html">Index</a>
+    <a href="./Product.html">Product Management</a>
+    <a href="./Inventory.html">Inventory Management</a>
+    <a href="./Employee.html">Employee Management</a>
+    <a href="./Revenue.html">Revenue</a>
+</div>
+
+<div class="container">
+    <h1>Hello, manager</h1>
+    <div class="flex">
+        <!-- 摘要卡片示例 -->
+        <div class="card">
+            <h3>Total Revenue</h3>
+            <p>¥ 123,456</p>
+        </div>
+        <div class="card">
+            <h3>Today Revenue</h3>
+            <p>¥ 15,680</p>
+        </div>
+        <div class="card">
+            <h3>Storage Warning</h3>
+            <p>5 Products</p>
+        </div>
+    </div>
+    <!-- 更多卡片和内容可以根据需要添加 -->
+</div>
+
+<footer>
+    <p>Store Management System © 2023</p>
+</footer>
+
+<script>
+    // 这里可以添加一些JavaScript来处理动态的数据更新，例如日期和时间的显示
+    document.addEventListener('DOMContentLoaded', function () {
+        // 示例: 更新当前日期和时间
+        setInterval(function() {
+            let now = new Date();
+            let footer = document.querySelector('footer');
+            footer.innerHTML = `Store Management System © ${now.getFullYear()} - Current Time: ${now.toLocaleTimeString()}`;
+        }, 1000);
+    });
+</script>
+
+</body>
+</html>
