@@ -9,12 +9,11 @@
 <body>
 
 <div class="navbar">
-    <!-- Navigation links -->
-    <a href="./Index.html">Index</a>
-    <a href="./Product.html">Product Management</a>
-    <a href="./Inventory.html">Inventory Management</a>
-    <a href="./Employee.html">Employee Management</a>
-    <a href="./Revenue.html">Revenue</a>
+    <a href="{{ url_for('index') }}">Index</a>
+    <a href="{{ url_for('product') }}">Product Management</a>
+    <a href="{{ url_for('inventory') }}">Inventory Management</a>
+    <a href="{{ url_for('employee') }}">Employee Management</a>
+    <a href="{{ url_for('revenue') }}">Revenue</a>
 </div>
 
 <div class="container">
