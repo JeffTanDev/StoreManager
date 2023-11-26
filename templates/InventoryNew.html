@@ -25,18 +25,41 @@
         <label for="productQuantity">Remaining Quantity:</label>
         <input type="number" id="productQuantity" name="productQuantity" required>
 
-        <label for="productCost">Cost Price:</label>
+        <label for="productCost">Purchase Price:</label>
         <input type="number" id="productCost" name="productCost" required>
 
         <label for="productPrice">Selling Price:</label>
         <input type="number" id="productPrice" name="productPrice" required>
 
-        <!-- 其他库存信息输入 -->
+        <label for="Date">Next Restock Date:</label>
+        <input type="datetime" id="date" name="date" required>
 
-        <input type="submit" value="Add Inventory Product">
+        <!-- 其他库存信息输入 -->
+        <button type="button" onclick="addInventory()">Add Inventory Product</button>
     </form>
 </div>
 
-<script src="script.js"></script>
+<!-- 引入Axios库 -->
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+<script>
+    function addInventory() {
+        var productData = {
+            name: document.getElementById('productName').value,
+            remaining_quantity: document.getElementById('productQuantity').value,
+            purchase_price: document.getElementById('productCost').value,
+            selling_price: document.getElementById('productPrice').value,
+            next_restock_date: document.getElementById('date').value,
+        };
+
+        axios.post('/add_inventory', productData)
+            .then(function (response) {
+                window.location.href = '/inventory'; // 跳转到product.html
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+</script>
 </body>
 </html>

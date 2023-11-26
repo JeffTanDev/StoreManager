@@ -204,5 +204,81 @@ def get_product():
     return jsonify(product_info)
 
 
+# -----------------------------------------------------------------------------------------------------
+# Inventory
+
+next_inventory_id = 1
+inventory_info = {}  # 字典来存储产品信息
+current_inventory = None  # 用于存储当前编辑的产品名字
+
+
+@app.route('/set_current_inventory', methods=['POST'])
+def set_current_inventory():
+    global current_inventory
+    data = request.json
+    current_inventory = data['id']
+    print(current_inventory)
+    return jsonify({"message": "Current inventory set"}), 200
+
+
+@app.route('/get_current_inventory', methods=['GET'])
+def get_current_inventory():
+    global current_inventory
+    if current_inventory in inventory_info:
+        return jsonify(current_inventory, inventory_info[current_inventory])
+    else:
+        return jsonify({"error": "inventory not found"}), 404
+
+
+@app.route('/add_inventory', methods=['POST'])
+def addinventory():
+    global next_inventory_id
+    data = request.json
+    inventory_info[next_inventory_id] = {
+        'name': data['name'],
+        'remaining_quantity': data['remaining_quantity'],
+        'purchase_price': data['purchase_price'],
+        'selling_price': data['selling_price'],
+        'next_restock_date': data['next_restock_date'],
+    }
+    next_inventory_id += 1
+    return jsonify({"message": "inventory added"}), 200
+
+
+@app.route('/update_inventory', methods=['POST'])
+def update_inventory():
+    data = request.json
+    print(data)
+    print(inventory_info)
+    print(next_inventory_id)
+    inventory_id = int(data['id'])
+    if inventory_id in inventory_info:
+        inventory_info[inventory_id] = {
+            'name': data['name'],
+            'remaining_quantity': data['remaining_quantity'],
+            'purchase_price': data['purchase_price'],
+            'selling_price': data['selling_price'],
+            'next_restock_date': data['next_restock_date'],
+        }
+        return jsonify({"message": "inventory updated"}), 200
+    else:
+        return jsonify({"error": "inventory not found"}), 404
+
+
+@app.route('/delete_inventory/<int:inventory_id>', methods=['DELETE'])
+def delete_inventory(inventory_id):
+    if inventory_id in inventory_info:
+        del inventory_info[inventory_id]
+        return jsonify({"message": "inventory deleted"}), 200
+    else:
+        return jsonify({"error": "inventory not found"}), 404
+
+
+@app.route('/get_inventory', methods=['GET'])
+def get_inventory():
+    print(inventory_info)
+    return jsonify(inventory_info)
+
+
 if __name__ == '__main__':
     app.run(debug=True)

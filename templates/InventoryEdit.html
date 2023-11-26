@@ -19,6 +19,7 @@
 <div class="container">
     <h1>Edit Inventory Product</h1>
     <form action="/update_inventory_product" method="post">
+        <input type="hidden" id="inventoryId"> <!-- 隐藏字段用于存储产品ID -->
         <!-- 表单内容应根据选定的库存产品预填充 -->
         <label for="productName">Product Name:</label>
         <input type="text" id="productName" name="productName" value="Product B" required>
@@ -26,11 +27,14 @@
         <label for="productQuantity">Remaining Quantity:</label>
         <input type="number" id="productQuantity" name="productQuantity" value="1000" required>
 
-        <label for="productCost">Cost Price:</label>
+        <label for="productCost">Purchase Price:</label>
         <input type="number" id="productCost" name="productCost" value="10.00" required>
 
         <label for="productPrice">Selling Price:</label>
         <input type="number" id="productPrice" name="productPrice" value="15.00" required>
+
+        <label for="Date">Next Restock Date:</label>
+        <input type="datetime" id="date" name="date" value="11.25" required>
 
         <!-- 其他库存信息输入 -->
 
@@ -38,6 +42,54 @@
     </form>
 </div>
 
-<script src="script.js"></script>
+<!-- 引入Axios库 -->
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+<script>
+    window.onload = function() {
+        // 获取当前产品信息
+        axios.get('/get_current_inventory')
+            .then(function (response) {
+                console.log(response)
+                const inventory = response.data[1];
+                document.getElementById('inventoryId').value = response.data[0]; // 设置产品ID
+                document.getElementById('productName').value = inventory.name;
+                document.getElementById('productQuantity').value = inventory.remaining_quantity;
+                document.getElementById('productCost').value = inventory.purchase_price;
+                document.getElementById('productPrice').value = inventory.selling_price;
+                document.getElementById('date').value = inventory.next_restock_date;
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    };
+
+    function updateProductInfo() {
+        // 获取表单中的产品数据
+        var productData = {
+            id: document.getElementById('inventoryId').value, // 假设产品ID是从响应中获取的
+            name: document.getElementById('productName').value,
+            remaining_quantity: document.getElementById('productQuantity').value,
+            purchase_price: document.getElementById('productCost').value,
+            selling_price: document.getElementById('productPrice').value,
+            next_restock_date: document.getElementById('date').value
+        };
+
+        // 发送更新请求
+        axios.post('/update_inventory', productData)
+            .then(function (response) {
+                window.location.href = '/inventory'; // 成功后跳转到产品管理页面
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+
+    // 将表单的提交更改为调用updateProductInfo函数
+    document.querySelector('.container form').addEventListener('submit', function(event) {
+        event.preventDefault(); // 阻止表单默认提交
+        updateProductInfo();
+    });
+</script>
 </body>
 </html>
