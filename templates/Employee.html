@@ -54,7 +54,7 @@
                         <td>${employee.workHours}</td>
                         <td>${employee.AcworkHours}</td>
                         <td>${employee.salary}</td>
-                        <td><a href="#" onclick="editEmployee(${id})">Edit</a> | <a href="#">Delete</a></td>
+                        <td><a href="#" onclick="editEmployee(${id})">Edit</a> | <a href="#" onclick="deleteEmployee(${id})">Delete</a></td>
                     `;
                 }
             }
@@ -64,6 +64,17 @@
         });
     };
 
+    function deleteEmployee(id) {
+        axios.delete('/delete_employee/' + id)
+            .then(function (response) {
+                console.log(response.data);
+                window.location.reload(); // 刷新页面
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+    
     function editEmployee(id) {
         axios.post('/set_current_employee', { id: id })
         .then(function (response) {

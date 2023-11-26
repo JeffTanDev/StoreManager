@@ -122,6 +122,14 @@ def update_employee():
     else:
         return jsonify({"error": "Employee not found"}), 404
 
+@app.route('/delete_employee/<int:employee_id>', methods=['DELETE'])
+def delete_employee(employee_id):
+    if employee_id in employee_info:
+        del employee_info[employee_id]
+        return jsonify({"message": "Employee deleted"}), 200
+    else:
+        return jsonify({"error": "Employee not found"}), 404
+
 @app.route('/get_employees', methods=['GET'])
 def get_employees():
     return jsonify(employee_info)
