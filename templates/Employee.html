@@ -18,7 +18,7 @@
 
 <div class="container">
     <h1>Employee Management</h1>
-    <a href="./EmployeeNew.html" class="button">Add Employee</a>
+    <a href="{{ url_for('employeenew') }}" class="button">Add Employee</a>
     <table>
         <tr>
             <th>Name</th>
@@ -28,22 +28,52 @@
             <th>Monthly Pay</th>
             <th>Operation</th>
         </tr>
-        <!-- 示例员工数据，实际应用应从数据库中动态加载 -->
-        <tr>
-            <td>张三</td>
-            <td>店员</td>
-            <td>160小时</td>
-            <td>168小时</td>
-            <td>¥3000</td>
-            <td>
-                <a href="./EmployeeEdit.html">Edit</a> |
-                <a href="#">Delete</a>
-            </td>
-        </tr>
         <!-- 其他员工数据 -->
+        <tbody id="employeeTable">
+            <!-- Dynamically generated employee rows will be inserted here -->
+        </tbody>
     </table>
 </div>
 
-<script src="script.js"></script>
+<!-- 引入Axios库 -->
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+    window.onload = function() {
+    axios.get('/get_employees')
+        .then(function (response) {
+            const employees = response.data;
+            const table = document.getElementById('employeeTable');
+
+            for (let id in employees) {
+                if (employees.hasOwnProperty(id)) {
+                    let employee = employees[id];
+                    let row = table.insertRow();
+                    row.innerHTML = `
+                        <td>${employee.name}</td>
+                        <td>${employee.position}</td>
+                        <td>${employee.workHours}</td>
+                        <td>${employee.AcworkHours}</td>
+                        <td>${employee.salary}</td>
+                        <td><a href="#" onclick="editEmployee(${id})">Edit</a> | <a href="#">Delete</a></td>
+                    `;
+                }
+            }
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+    };
+
+    function editEmployee(id) {
+        axios.post('/set_current_employee', { id: id })
+        .then(function (response) {
+            window.location.href = "{{ url_for('employeeedit') }}";
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+    }
+</script>
+
 </body>
 </html>

@@ -33,10 +33,31 @@
 
         <!-- 其他员工信息输入 -->
 
-        <input type="submit" value="Add Employee">
+        <!-- 在HTML中添加按钮的id和onclick事件 -->
+    <input type="button" id="updateButton" value="Update Employee Info" onclick="AddEmployeeInfo()">
     </form>
 </div>
 
-<script src="script.js"></script>
+<!-- 引入Axios库 -->
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+<script>
+    function AddEmployeeInfo() {
+        var employeeData = {
+            name: document.getElementById('staffName').value,
+            position: document.getElementById('staffPosition').value,
+            workHours: document.getElementById('expectedWorkHours').value,
+            salary: document.getElementById('salary').value
+        };
+
+        axios.post('/add_employee', employeeData)
+            .then(function (response) {
+                window.location.href = '/employee'; // 跳转到employee.html
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+</script>
 </body>
 </html>

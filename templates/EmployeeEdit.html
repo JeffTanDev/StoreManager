@@ -18,26 +18,69 @@
 
 <div class="container">
     <h1>Edit Employee</h1>
-    <form action="/update_staff_info" method="post">
-        <!-- 表单内容应根据选定的员工信息预填充 -->
-        <label for="staffName">Employee Name:</label>
-        <input type="text" id="staffName" name="staffName" value="Zhang San" required>
+    <input type="hidden" id="staffId"> <!-- 隐藏字段用于存储员工ID -->
 
-        <label for="staffPosition">Position:</label>
-        <input type="text" id="staffPosition" name="staffPosition" value="Clerk" required>
+    <label for="staffName">Employee Name:</label>
+    <input type="text" id="staffName" name="staffName" value="Zhang San" required>
 
-        <label for="expectedWorkHours">Expected Work Hours:</label>
-        <input type="number" id="expectedWorkHours" name="expectedWorkHours" value="160" required>
+    <label for="staffPosition">Position:</label>
+    <input type="text" id="staffPosition" name="staffPosition" value="Clerk" required>
 
-        <label for="salary">Monthly Salary:</label>
-        <input type="number" id="salary" name="salary" value="3000" required>
+    <label for="actualWorkHours">Actual Work Hours:</label>
+    <input type="number" id="actualWorkHours" name="actualWorkHours" value="160" required>
 
-        <!-- 其他员工信息编辑 -->
+    <label for="expectedWorkHours">Expected Work Hours:</label>
+    <input type="number" id="expectedWorkHours" name="expectedWorkHours" value="160" required>
 
-        <input type="submit" value="Update Employee Info">
-    </form>
+    <label for="salary">Monthly Salary:</label>
+    <input type="number" id="salary" name="salary" value="3000" required>
+
+    <!-- 在HTML中添加按钮的id和onclick事件 -->
+    <input type="button" id="updateButton" value="Update Employee Info" onclick="updateEmployeeInfo()">
 </div>
 
-<script src="script.js"></script>
+
+
+<!-- 引入Axios库 -->
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+<script>
+    window.onload = function() {
+        axios.get('/get_current_employee')
+            .then(function (response) {
+                console.log(response)
+                const employee = response.data[1];
+                document.getElementById('staffId').value = response.data[0]; // 设置员工ID
+                document.getElementById('staffName').value = employee.name;
+                document.getElementById('staffPosition').value = employee.position;
+                document.getElementById('actualWorkHours').value = employee.AcworkHours;
+                document.getElementById('expectedWorkHours').value = employee.workHours;
+                document.getElementById('salary').value = employee.salary;
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    };
+
+    function updateEmployeeInfo() {
+        var employeeData = {
+            id: document.getElementById('staffId').value, // 获取员工ID
+            name: document.getElementById('staffName').value,
+            position: document.getElementById('staffPosition').value,
+            AcworkHours: document.getElementById('actualWorkHours').value,
+            workHours: document.getElementById('expectedWorkHours').value,
+            salary: document.getElementById('salary').value
+        };
+
+        axios.post('/update_employee', employeeData)
+            .then(function (response) {
+                window.location.href = '/employee';
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+</script>
+
 </body>
 </html>
