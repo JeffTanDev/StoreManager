@@ -59,17 +59,10 @@ def revenue():
     return render_template('Revenue.html')
 
 
-@app.route('/add_product', methods=['GET', 'POST'])
-def add_product():
-    if request.method == 'POST':
-        # 处理添加产品的逻辑
-        return redirect(url_for('product_management'))
-    return render_template('add_product.html')
-
-
 next_employee_id = 1
 employee_info = {}  # 字典来存储员工信息
 current_employee = None  # 用于存储当前编辑的员工名字
+
 
 @app.route('/set_current_employee', methods=['POST'])
 def set_current_employee():
@@ -103,6 +96,7 @@ def add_employee():
     next_employee_id += 1
     return jsonify({"message": "Employee added"}), 200
 
+
 @app.route('/update_employee', methods=['POST'])
 def update_employee():
     data = request.json
@@ -122,6 +116,7 @@ def update_employee():
     else:
         return jsonify({"error": "Employee not found"}), 404
 
+
 @app.route('/delete_employee/<int:employee_id>', methods=['DELETE'])
 def delete_employee(employee_id):
     if employee_id in employee_info:
@@ -130,9 +125,84 @@ def delete_employee(employee_id):
     else:
         return jsonify({"error": "Employee not found"}), 404
 
+
 @app.route('/get_employees', methods=['GET'])
 def get_employees():
     return jsonify(employee_info)
+
+
+# -----------------------------------------------------------------------------------------------------
+# Product
+
+next_product_id = 1
+product_info = {}  # 字典来存储产品信息
+current_product = None  # 用于存储当前编辑的产品名字
+
+
+@app.route('/set_current_product', methods=['POST'])
+def set_current_product():
+    global current_product
+    data = request.json
+    current_product = data['id']
+    print(current_product)
+    return jsonify({"message": "Current product set"}), 200
+
+
+@app.route('/get_current_product', methods=['GET'])
+def get_current_product():
+    global current_product
+    if current_product in product_info:
+        return jsonify(current_product, product_info[current_product])
+    else:
+        return jsonify({"error": "product not found"}), 404
+
+
+@app.route('/add_product', methods=['POST'])
+def addproduct():
+    global next_product_id
+    data = request.json
+    product_info[next_product_id] = {
+        'name': data['name'],
+        'sold_quantity': data['sold_quantity'],
+        'remaining_quantity': data['remaining_quantity'],
+        'selling_price': data['selling_price']
+    }
+    next_product_id += 1
+    return jsonify({"message": "product added"}), 200
+
+
+@app.route('/update_product', methods=['POST'])
+def update_product():
+    data = request.json
+    print(data)
+    print(product_info)
+    print(next_product_id)
+    product_id = int(data['id'])
+    if product_id in product_info:
+        product_info[product_id] = {
+            'name': data['name'],
+            'sold_quantity': data['sold_quantity'],
+            'remaining_quantity': data['remaining_quantity'],
+            'selling_price': data['selling_price']
+        }
+        return jsonify({"message": "product updated"}), 200
+    else:
+        return jsonify({"error": "product not found"}), 404
+
+
+@app.route('/delete_product/<int:product_id>', methods=['DELETE'])
+def delete_product(product_id):
+    if product_id in product_info:
+        del product_info[product_id]
+        return jsonify({"message": "product deleted"}), 200
+    else:
+        return jsonify({"error": "product not found"}), 404
+
+
+@app.route('/get_product', methods=['GET'])
+def get_product():
+    return jsonify(product_info)
+
 
 if __name__ == '__main__':
     app.run(debug=True)

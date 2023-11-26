@@ -18,7 +18,7 @@
 
 <div class="container">
     <h1>Product Management</h1>
-    <a href="./ProductNew.html" class="button">Add New Product</a>
+    <a href="{{ url_for('productnew') }}" class="button">Add New Product</a>
     <table>
         <tr>
             <th>Product Name</th>
@@ -28,22 +28,60 @@
             <th>Expected Sell-Out Date</th>
             <th>Actions</th>
         </tr>
-        <!-- Example product data, actual application should dynamically load from the database -->
-        <tr>
-            <td>Product A</td>
-            <td>150</td>
-            <td>350</td>
-            <td>¥20.00</td>
-            <td>2023-12-30</td>
-            <td>
-                <a href="./ProductEdit.html">Edit</a> |
-                <a href="#">Delete</a>
-            </td>
-        </tr>
         <!-- Other product data -->
     </table>
 </div>
 
-<script src="script.js"></script>
+<!-- 引入Axios库 -->
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+    window.onload = function() {
+        axios.get('/get_product')
+            .then(function (response) {
+                const products = response.data;
+                console.log(products)
+                const table = document.querySelector('.container table');
+
+                for (let id in products) {
+                    if (products.hasOwnProperty(id)) {
+                        let product = products[id];
+                        let row = table.insertRow();
+                        row.innerHTML = `
+                            <td>${product.name}</td>
+                            <td>${product.sold_quantity}</td>
+                            <td>${product.remaining_quantity}</td>
+                            <td>${product.selling_price}</td>
+                            <td>${(product.remaining_quantity/product.sold_quantity).toFixed(2)} days</td>
+                            <td><a href="#" onclick="editProduct(${id})">Edit</a> | <a href="#" onclick="deleteProduct(${id})">Delete</a></td>
+                        `;
+                    }
+                }
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    };
+
+    function deleteProduct(id) {
+        axios.delete('/delete_product/' + id)
+            .then(function (response) {
+                console.log(response.data);
+                window.location.reload(); // 刷新页面
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+    
+    function editProduct(id) {
+        axios.post('/set_current_product', { id: id })
+            .then(function (response) {
+                window.location.href = "{{ url_for('productedit') }}"; // 跳转到产品编辑页面
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+</script>
 </body>
 </html>

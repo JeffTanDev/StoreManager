@@ -20,8 +20,16 @@
     <h1>Edit Product</h1>
     <form action="/update_product" method="post">
         <!-- Form content should be pre-filled based on the selected product -->
+        <input type="hidden" id="productId"> <!-- 隐藏字段用于存储产品ID -->
+
         <label for="productName">Product Name:</label>
         <input type="text" id="productName" name="productName" value="Product A" required>
+
+        <label for="soldQuantity">Sold Quantity:</label>
+        <input type="number" id="soldQuantity" name="soldQuantity" required>
+
+        <label for="remainingQuantity">Remaining Quantity:</label>
+        <input type="number" id="remainingQuantity" name="remainingQuantity" required>
 
         <label for="productPrice">Selling Price:</label>
         <input type="number" id="productPrice" name="productPrice" value="20.00" required>
@@ -32,6 +40,53 @@
     </form>
 </div>
 
-<script src="script.js"></script>
+<!-- 引入Axios库 -->
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+<script>
+    window.onload = function() {
+        // 获取当前产品信息
+        axios.get('/get_current_product')
+            .then(function (response) {
+                console.log(response)
+                const product = response.data[1];
+                document.getElementById('productId').value = response.data[0]; // 设置产品ID
+                document.getElementById('productName').value = product.name;
+                document.getElementById('soldQuantity').value = product.sold_quantity;
+                document.getElementById('remainingQuantity').value = product.remaining_quantity;
+                document.getElementById('productPrice').value = product.selling_price;
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    };
+
+    function updateProductInfo() {
+        // 获取表单中的产品数据
+        var productData = {
+            id: document.getElementById('productId').value, // 假设产品ID是从响应中获取的
+            name: document.getElementById('productName').value,
+            sold_quantity: document.getElementById('soldQuantity').value,
+            remaining_quantity: document.getElementById('remainingQuantity').value,
+            selling_price: document.getElementById('productPrice').value
+        };
+
+        // 发送更新请求
+        axios.post('/update_product', productData)
+            .then(function (response) {
+                window.location.href = '/product'; // 成功后跳转到产品管理页面
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+
+    // 将表单的提交更改为调用updateProductInfo函数
+    document.querySelector('.container form').addEventListener('submit', function(event) {
+        event.preventDefault(); // 阻止表单默认提交
+        updateProductInfo();
+    });
+</script>
+
 </body>
 </html>

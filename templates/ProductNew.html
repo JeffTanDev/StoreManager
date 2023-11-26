@@ -18,19 +18,45 @@
 
 <div class="container">
     <h1>Add New Product</h1>
-    <form action="/submit_new_product" method="post">
+    <form id="newProductForm">
         <label for="productName">Product Name:</label>
         <input type="text" id="productName" name="productName" required>
 
-        <label for="productPrice">Selling Price:</label>
-        <input type="number" id="productPrice" name="productPrice" required>
+        <label for="soldQuantity">Sold Quantity:</label>
+        <input type="number" id="soldQuantity" name="soldQuantity" required>
+
+        <label for="remainingQuantity">Remaining Quantity:</label>
+        <input type="number" id="remainingQuantity" name="remainingQuantity" required>
+
+        <label for="sellingPrice">Selling Price:</label>
+        <input type="number" id="sellingPrice" name="sellingPrice" required>
 
         <!-- Other product information inputs -->
 
-        <input type="submit" value="Add Product">
+        <button type="button" onclick="addProduct()">Add Product</button>
     </form>
 </div>
 
-<script src="script.js"></script>
+<!-- 引入Axios库 -->
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+<script>
+    function addProduct() {
+        var productData = {
+            name: document.getElementById('productName').value,
+            sold_quantity: document.getElementById('soldQuantity').value,
+            remaining_quantity: document.getElementById('remainingQuantity').value,
+            selling_price: document.getElementById('sellingPrice').value
+        };
+
+        axios.post('/add_product', productData)
+            .then(function (response) {
+                window.location.href = '/product'; // 跳转到product.html
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+    }
+</script>
 </body>
 </html>
